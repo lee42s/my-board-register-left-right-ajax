@@ -1,0 +1,40 @@
+{% extends "leftright/base_game.html" %} {% block title %}게임참여{% endblock %} {% block content_sub %}
+<h1>'{{ user }}'님 게임참여</h1>
+<nav class="clearfix">
+    <ul>
+        <li>
+            <div class="box">좌</div>
+            <div class="box largefont" id="lfpoint">{{ ltScore }}</div>
+            <div class="box"><button type="button" onclick="myenv.addpoint('lf')">왼쪽</button></div>
+        </li>
+        <li>
+            <div class="box">우</div>
+            <div class="box largefont" id="rtpoint">{{ rtScore }}</div>
+            <div class="box"><button type="button" onclick="myenv.addpoint('rt')">왼쪽</button></div>
+        </li>
+    </ul>
+</nav>
+
+<script>
+    var myenv = {
+        disp_lf: document.getElementById('lfpoint'),
+        disp_rt: document.getElementById('rtpoint'),
+        addpoint: function (dir) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var myArr = JSON.parse(this.responseText);
+                    if (dir === "lf") {
+                        myenv.disp_lf.textContent = myArr['point'];
+                    } else if (dir === "rt") {
+                        myenv.disp_rt.textContent = myArr['point'];
+                    }
+                }
+            };
+            url = "{% url 'leftright_getpoint' %}?dir=" + dir;
+            xhttp.open("GET", url, true);
+            xhttp.send();
+        }
+    }
+</script>
+{% endblock %}

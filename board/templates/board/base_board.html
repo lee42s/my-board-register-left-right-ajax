@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}게시판{% endblock %}
+{% load staticfiles %}
+{% block extra_style %}{% endblock %}
+{% block content %}
+<h1>게시판</h1>
+<nav class="clearfix">
+    <ul>
+        <li><a href="{% url 'board:post_add' %}">쓰기</a></li>
+    </ul>
+</nav>
+<article>
+{% block content_sub %}{% endblock content_sub %}
+</article>
+{% endblock content %}

@@ -1,0 +1,10 @@
+.box {
+    width: 200px;
+    border: 1px solid #ccc;
+    margin: 0;
+    padding: 10px;
+    text-align: center;
+}
+.largefont {
+    font-size: 5em;
+}

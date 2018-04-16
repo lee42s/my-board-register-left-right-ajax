@@ -1,0 +1,24 @@
+{% extends "board/base_board.html" %}
+{% block title %}게시판 목록{% endblock %}
+{% block content_sub %}
+<h1>목록보기</h1>
+<div>
+{% for post in posts %}
+    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+    <!-- https://goo.gl/aw2sQW 내장 템플릿 태그와 필터 -->
+    <br>{{ post.owner }} {{ post.modify_date|date:"M/d"|lower }}
+    {% if forloop.last == False %}
+    <br>
+    {% endif %}
+{% endfor %}
+</div>
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">이전</a>
+    {% endif %}
+    <!-- https://goo.gl/BRFiJV 의 Context부분 참고 -->
+    <!-- https://goo.gl/cS47NK page 객체에 number -->
+    {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">다음</a>
+    {% endif %}
+{% endblock content_sub %}

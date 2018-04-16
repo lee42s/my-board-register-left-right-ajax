@@ -1,0 +1,21 @@
+{% extends "leftright/base_game.html" %}
+{% block title %}게임 결과{% endblock %}
+{% block content_sub %}
+<h1>목록보기</h1>
+<ul>
+    {% for obj in object_list %}
+    <li>{{ obj.created_date }}, {{ obj.usr }}, {{ obj.leftright }}</li>
+    {% empty %}
+    <li>게임을 참여하지 않았습니다.</li>
+    {% endfor %}
+</ul>
+{% if page_obj.has_previous %}
+<a href="?page={{ page_obj.previous_page_number }}">이전</a>
+{% endif %}
+<!-- https://goo.gl/BRFiJV 의 Context부분 참고 -->
+<!-- https://goo.gl/cS47NK page 객체에 number -->
+{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+{% if page_obj.has_next %}
+<a href="?page={{ page_obj.next_page_number }}">다음</a>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}왼쪽 오른쪽 게임{% endblock %}
+{% load staticfiles %}
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'css/base_game.css' %}">
+{% endblock %}
+{% block content %}
+<h1>왼쪽 오른쪽 게임</h1>
+<nav class="clearfix">
+    <ul>
+        <li><a href="{% url 'game:index' %}">게임로그</a></li>
+        <li>
+            {% if user.is_authenticated %}
+            <a href="{% url 'game:do' %}">게임참여</a>
+            {% else %}
+            게임참여 <a href="{% url 'login' %}">로그인하세요</a>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
+<article>
+{% block content_sub %}{% endblock %}
+</article>
+{% endblock %}

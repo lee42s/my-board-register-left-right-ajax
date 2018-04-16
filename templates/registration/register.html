@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+<h1>비밀번호 변경</h1>
+<form method="post" action="."> {% csrf_token %} {% if form.errors %}
+    <p>아래 입력내용을 다시 확인하세요.</p>
+    {% endif %}
+    <p>이름과 비밀번호를 입력하세요.</p>
+    <fieldset>
+        {{ form.username.label_tag }} {{ form.username }}
+        <span id="message"></span>
+        <br>{{ form.password1.label_tag }} {{ form.password1 }}
+        <br>{{ form.password2.label_tag }} {{ form.password2 }}
+    </fieldset>
+    <div>
+        <input type="submit" value="회원가입"/>
+    </div>
+</form>
+{% endblock %} {% block javascript %}
+<script>
+    $("#id_username").change(function () {
+        var username = $(this).val();
+        // console.log( username );
+
+        $.ajax({
+            url: '{% url "validate_username" %}',
+            data: {
+                'username': username
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.is_taken) {
+                    $("#message").html(data.error_message);
+                } else {
+                    $("#message").html("");
+                }
+            }
+        });
+    });
+
+</script>
+{% endblock %}
